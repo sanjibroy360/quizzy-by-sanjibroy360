@@ -11,6 +11,9 @@ gem 'sqlite3', '~> 1.4'
 #React
 gem 'react-rails'
 
+# Use Active Model has_secure_password
+gem 'bcrypt', '~> 3.1.13'
+
 # Application server
 gem 'puma', '~> 5.0'
 
