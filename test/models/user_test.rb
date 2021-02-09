@@ -2,7 +2,7 @@ require "test_helper"
 
 class UserTest < ActiveSupport::TestCase
   def setup
-    @user = User.new(first_name: "Tony", last_name: "Stark", email: "tony360@gmail.com")
+    @user = User.new(first_name: "Tony", last_name: "Stark", email: "tony360@gmail.com", role: "standard")
   end
 
   def test_user_should_be_valid
@@ -81,6 +81,33 @@ class UserTest < ActiveSupport::TestCase
 
   def test_email_should_not_be_null
     @user.email = nil
+    assert_not @user.valid?
+  end
+
+  def test_user_should_not_have_a_invalid_role
+    assert_raises ArgumentError do
+      @user.role = "anyrandomtext"
+      assert_not @user.valid?
+    end
+  end
+
+  def test_administrator_should_be_a_valid_role
+    @user.role = "administrator"
+    assert @user.valid?
+  end
+
+  def test_standard_should_be_a_valid_role
+    @user.role = "standard"
+    assert @user.valid?
+  end
+
+  def test_user_role_should_not_be_null
+    @user.role = nil
+    assert_not @user.valid?
+  end
+
+  def test_user_role_should_present
+    @user.role = ""
     assert_not @user.valid?
   end
 end
