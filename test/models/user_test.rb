@@ -2,7 +2,7 @@ require "test_helper"
 
 class UserTest < ActiveSupport::TestCase
   def setup
-    @user = User.new(first_name: "Tony", last_name: "Stark", email: "tony360@gmail.com", role: "standard")
+    @user = User.new(first_name: "Tony", last_name: "Stark", email: "tony360@gmail.com", role: "standard", password: "password1234", password_confirmation: "password1234")
   end
 
   def test_user_should_be_valid
@@ -109,5 +109,24 @@ class UserTest < ActiveSupport::TestCase
   def test_user_role_should_present
     @user.role = ""
     assert_not @user.valid?
+  end
+
+  def test_password_should_not_be_blank
+    @user.password = @user.password_confirmation = " " * 8
+    assert_not @user.valid?
+    assert_equal ["Password can't be blank"], @user.errors.full_messages
+  end
+
+  def test_password_should_not_be_too_short
+    @user.password = @user.password_confirmation = "a" * 3
+    assert_not @user.valid?
+    assert_equal ["Password is too short (minimum is 6 characters)"], @user.errors.full_messages
+  end
+
+  def test_password_and_password_confirmation_should_match
+    @user.password = "password"
+    @user.password_confirmation = "wrong_password"
+    assert_not @user.valid?
+    assert_equal ["Password confirmation doesn't match Password"], @user.errors.full_messages
   end
 end
