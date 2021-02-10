@@ -1,6 +1,6 @@
 class User < ApplicationRecord
   before_save { email.downcase! }
-  enum role: { standard: "standard", administrator: "administrator" }
+  enum role: { standard: 0, administrator: 1 }
   has_secure_password
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
