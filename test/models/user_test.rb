@@ -12,32 +12,38 @@ class UserTest < ActiveSupport::TestCase
   def test_first_name_should_be_present
     @user.first_name = "     "
     assert_not @user.valid?
+    assert_equal ["First name can't be blank"], @user.errors.full_messages
   end
 
   def test_last_name_should_be_present
     @user.last_name = "     "
     assert_not @user.valid?
+    assert_equal ["Last name can't be blank"], @user.errors.full_messages
   end
 
   def test_email_should_be_present
     @user.email = "     "
     assert_not @user.valid?
+    assert_equal ["Email is invalid"], @user.errors.full_messages
   end
 
   def test_first_name_should_not_be_too_long
     @user.first_name = "a" * 51
     assert_not @user.valid?
+    assert_equal ["First name is too long (maximum is 50 characters)"], @user.errors.full_messages
   end
 
   def test_last_name_should_not_be_too_long
     @user.last_name = "a" * 51
     assert_not @user.valid?
+    assert_equal ["Last name is too long (maximum is 50 characters)"], @user.errors.full_messages
   end
 
   def test_email_should_be_unique
     duplicate_user = @user.dup
     @user.save
     assert_not duplicate_user.valid?
+    assert_equal ["Email has already been taken"], duplicate_user.errors.full_messages
   end
 
   def test_email_should_be_saved_as_lowercase
@@ -51,6 +57,7 @@ class UserTest < ActiveSupport::TestCase
     invalid_emai = "tony360@gmail,com"
     @user.email = invalid_emai
     assert_not @user.valid?
+    assert_equal ["Email is invalid"], @user.errors.full_messages
   end
 
   def test_valid_email_should_be_accepted
@@ -62,26 +69,30 @@ class UserTest < ActiveSupport::TestCase
     uppercase_email = "SAM@example.com"
     lowercase_email = uppercase_email.downcase
 
-    duplicate_user = User.new(first_name: "Virat", last_name: "Kohli", email: lowercase_email)
+    duplicate_user = User.new(first_name: "Virat", last_name: "Kohli", email: lowercase_email, password: "password1234", password_confirmation: "password1234")
     @user.email = uppercase_email
 
     @user.save
     assert_not duplicate_user.valid?
+    assert_equal ["Email has already been taken"], duplicate_user.errors.full_messages
   end
 
   def test_first_name_should_not_be_null
     @user.first_name = nil
     assert_not @user.valid?
+    assert_equal ["First name can't be blank"], @user.errors.full_messages
   end
 
   def test_last_name_should_not_be_null
     @user.last_name = nil
     assert_not @user.valid?
+    assert_equal ["Last name can't be blank"], @user.errors.full_messages
   end
 
   def test_email_should_not_be_null
     @user.email = nil
     assert_not @user.valid?
+    assert_equal ["Email is invalid"], @user.errors.full_messages
   end
 
   def test_user_should_not_have_a_invalid_role
