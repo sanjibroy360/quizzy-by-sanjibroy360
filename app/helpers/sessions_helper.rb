@@ -17,8 +17,7 @@ module SessionsHelper
 
   def authenticate_user
     unless logged_in?
-      flash[:danger] = "You need to log in first."
-      redirect_to login_url
+      render json: { success: false, message: "You need to login first." }, status: 401
     end
   end
 end

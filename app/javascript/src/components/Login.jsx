@@ -1,17 +1,36 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import Input from "./Form/Input";
+import Toastr from "./common/Toaster";
+import Button from "components/Form/Button";
+import DisabledButton from "components/Form/DisabledButton";
 import authenticationApi from "apis/authentication";
 import { useUserContext } from "../context/user";
+import Loader from "components/common/Loader";
 
 export default function Login() {
   let [loading, setLoading] = useState(false);
   let [email, setEmail] = useState("");
-  const context = useUserContext();
-  const {dispatch, state} = context;
+  let [isFormFilled, setIsFormFilled] = useState(false);
+  let history = useHistory();
+
+  const { dispatch, state } = useUserContext();
 
   let [password, setPassword] = useState("");
 
-  console.log({dispatch, state});
+  useEffect(() => {
+    if (email.trim() && password.trim()) {
+      setIsFormFilled(true);
+    } else {
+      setIsFormFilled(false);
+    }
+  }, [email, password]);
+
+  function resetForm() {
+    setEmail("");
+    setPassword("");
+  }
+
   async function handleSubmit(event) {
     event.preventDefault();
     try {
@@ -20,20 +39,27 @@ export default function Login() {
       };
 
       setLoading(true);
-      let response = await authenticationApi.login(payload);
+      var response = await authenticationApi.login(payload);
       if (response.status == 200) {
         dispatch({ type: "SET_USER", payload: response.data });
+        Toastr.success(response.data.message);
+        history.push("/");
       }
     } catch (error) {
-      console.log(error);
+      Toastr.error(error.response.data.message);
     } finally {
       setLoading(false);
+      resetForm();
     }
+  }
+
+  if (loading) {
+    return <Loader />;
   }
 
   return (
     <div className="mx-auto w-full mt-20">
-      <form className="w-1/3 mx-auto">
+      <form className="w-1/3 mx-auto" method="POST">
         <h3 className="text-center text-3xl mb-10">Login</h3>
         <Input
           name="email"
@@ -50,15 +76,12 @@ export default function Login() {
           keyName="login002"
           type="password"
         />
-        <div className="flex justify-center mt-6">
-          <button
-            type="submit"
-            className="text-white text-center rounded text-sm py-1 px-3 bg-blue-500"
-            onClick={(event) => handleSubmit(event)}
-          >
-            Submit
-          </button>
-        </div>
+
+        {isFormFilled ? (
+          <Button type="submit" handleSubmit={handleSubmit} />
+        ) : (
+          <DisabledButton />
+        )}
       </form>
     </div>
   );
