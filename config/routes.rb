@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
-  get 'users/new'
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  root "home#index"
+  get "users/new"
+  resource :session, only: [:create, :destroy]
+  get "*path", to: "home#index", via: :all
 end
