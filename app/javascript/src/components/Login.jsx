@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import Input from "./Form/Input";
-import Toastr from "./common/Toaster";
+import Toastr from "./Common/Toaster";
 import Button from "components/Form/Button";
 import DisabledButton from "components/Form/DisabledButton";
 import authenticationApi from "apis/authentication";
 import { useUserContext } from "../context/user";
-import Loader from "components/common/Loader";
+import Loader from "components/Common/Loader";
 
 export default function Login() {
   let [loading, setLoading] = useState(false);
@@ -76,12 +76,13 @@ export default function Login() {
           keyName="login002"
           type="password"
         />
-
-        {isFormFilled ? (
-          <Button type="submit" handleSubmit={handleSubmit} />
-        ) : (
-          <DisabledButton />
-        )}
+        <div className="flex justify-center">
+          {isFormFilled ? (
+            <Button type="submit" handleSubmit={handleSubmit} />
+          ) : (
+            <DisabledButton />
+          )}
+        </div>
       </form>
     </div>
   );
