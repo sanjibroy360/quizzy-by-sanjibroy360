@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import Input from "./Form/Input";
-import Toastr from "./common/Toaster";
+import Toastr from "./Common/Toaster";
 import Button from "components/Form/Button";
 import DisabledButton from "components/Form/DisabledButton";
 import authenticationApi from "apis/authentication";
 import { useUserContext } from "../context/user";
-import Loader from "components/common/Loader";
+import Loader from "components/Common/Loader";
 
 export default function Login() {
   let [loading, setLoading] = useState(false);
@@ -60,7 +60,7 @@ export default function Login() {
   return (
     <div className="mx-auto w-full mt-20">
       <form className="w-1/3 mx-auto" method="POST">
-        <h3 className="text-center text-3xl mb-10">Login</h3>
+        <h3 className="text-center text-3xl mb-10">Log in</h3>
         <Input
           name="email"
           label="Email"
@@ -76,12 +76,13 @@ export default function Login() {
           keyName="login002"
           type="password"
         />
-
-        {isFormFilled ? (
-          <Button type="submit" handleSubmit={handleSubmit} />
-        ) : (
-          <DisabledButton />
-        )}
+        <div className="flex justify-center">
+          {isFormFilled ? (
+            <Button type="submit" handleSubmit={handleSubmit} />
+          ) : (
+            <DisabledButton />
+          )}
+        </div>
       </form>
     </div>
   );

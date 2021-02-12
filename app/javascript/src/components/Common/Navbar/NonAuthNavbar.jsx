@@ -15,7 +15,7 @@ export default function NonAuthNavbar() {
         <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
           <Link to="/login" class="mr-5 hover:text-gray-900">
             <button className="text-gray-700 hover:text-white bg-gray-400 hover:bg-blue-500 inline-flex items-center border-0 py-1 px-3 focus:outline-none rounded text-base mt-4 md:mt-0">
-              Login
+              Log In
             </button>
           </Link>
         </nav>
