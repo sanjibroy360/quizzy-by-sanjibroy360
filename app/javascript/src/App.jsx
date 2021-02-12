@@ -5,8 +5,9 @@ import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 import Login from "components/Login";
 import { setAuthHeaders } from "apis/axios";
 import { UserProvider } from "./context/user";
-import Navbar from "components/common/Navbar";
-import Loader from "components/common/Loader";
+import Navbar from "components/Common/Navbar";
+import Loader from "components/Common/Loader";
+import QuizList from "components/Quiz/QuizList";
 
 export default function App() {
   let [loading, setLoading] = useState(false);
@@ -25,7 +26,7 @@ export default function App() {
         <Router>
           <Navbar />
           <Switch>
-            <Route exact path="/" render={() => <div>Home</div>} />
+            <Route exact path="/" component={QuizList} />
             <Route exact path="/login" component={Login} />
           </Switch>
         </Router>

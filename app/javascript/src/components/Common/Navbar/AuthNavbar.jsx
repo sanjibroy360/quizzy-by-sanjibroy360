@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import authenticationApi from "apis/authentication";
-import Toastr from "components/common/Toaster";
+import Toastr from "components/Common/Toaster";
 import { setAuthHeaders } from "apis/axios";
 import { useUserContext } from "../../../context/user";
 export default function AuthNavbar({ user }) {
