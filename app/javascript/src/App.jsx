@@ -26,9 +26,8 @@ export default function App() {
         <Router>
           <Navbar />
           <Switch>
-            <Route exact path="/" render={() => <div>Home</div>} />
+            <Route exact path="/" component={QuizList} />
             <Route exact path="/login" component={Login} />
-            <Route exact path="/quiz/all" component={QuizList} />
           </Switch>
         </Router>
       </div>

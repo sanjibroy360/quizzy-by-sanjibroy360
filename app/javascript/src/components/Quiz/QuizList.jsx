@@ -9,7 +9,9 @@ export default function QuizList() {
       </div>
 
       <div className="mt-32">
-        <p className="text-gray-500 text-center">You have not created any quiz.</p>
+        <p className="text-gray-500 text-center">
+          You have not created any quiz.
+        </p>
       </div>
     </div>
   );

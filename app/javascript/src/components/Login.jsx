@@ -60,7 +60,7 @@ export default function Login() {
   return (
     <div className="mx-auto w-full mt-20">
       <form className="w-1/3 mx-auto" method="POST">
-        <h3 className="text-center text-3xl mb-10">Login</h3>
+        <h3 className="text-center text-3xl mb-10">Log in</h3>
         <Input
           name="email"
           label="Email"
