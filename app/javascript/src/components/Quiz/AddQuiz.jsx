@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Input from "components/Form/Input";
 import Button from "components/Form/Button";
-import DisabledButton from "components/Form/DisabledButton";
 import { useUserContext } from "../../context/user";
 import quizApi from "../../apis/quiz";
 import Toastr from "components/Common/Toaster";
@@ -53,11 +52,7 @@ export default function AddQuiz() {
           keyName=""
         />
         <div className="flex justify-center">
-          {quizTitle.trim() ? (
-            <Button type="submit" handleClick={handleSubmit} />
-          ) : (
-            <DisabledButton />
-          )}
+          <Button type="submit" handleClick={handleSubmit} /> 
         </div>
       </form>
     </div>
