@@ -46,7 +46,7 @@ export default function Login() {
         history.push("/");
       }
     } catch (error) {
-      Toastr.error(error.response.data.message);
+      Toastr.error(error.response.data);
     } finally {
       setLoading(false);
       resetForm();
@@ -54,13 +54,13 @@ export default function Login() {
   }
 
   if (loading) {
-    return <Loader />;
+    return <Loader />;  
   }
 
   return (
     <div className="mx-auto w-full mt-20">
       <form className="w-1/3 mx-auto" method="POST">
-        <h3 className="text-center text-3xl mb-10">Log in</h3>
+        <h3 className="text-center capitalize text-3xl mb-10">Log in</h3>
         <Input
           name="email"
           label="Email"
@@ -78,7 +78,7 @@ export default function Login() {
         />
         <div className="flex justify-center">
           {isFormFilled ? (
-            <Button type="submit" handleSubmit={handleSubmit} />
+            <Button type="submit" handleClick={handleSubmit} />
           ) : (
             <DisabledButton />
           )}
