@@ -5,7 +5,7 @@ class QuizzesController < ApplicationController
     quiz = Quiz.new(quiz_params)
 
     if quiz.save && quiz.user == current_user
-      render json: { success: true, message: "Quiz created successfuly.", quiz: quiz }, status: :ok
+      render json: { success: true, message: "Quiz created successfully.", quiz: quiz }, status: :ok
     else
       render json: { success: false, message: quiz.errors.full_messages }, status: :unprocessable_entity
     end
