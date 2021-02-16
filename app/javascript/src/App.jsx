@@ -9,7 +9,7 @@ import Navbar from "components/Common/Navbar";
 import Loader from "components/Common/Loader";
 import QuizList from "components/Quiz/QuizList";
 import AddQuiz from "components/Quiz/AddQuiz";
-import PageNotFound from "./components/PageNotFound";
+import PageNotFound from "components/PageNotFound";
 
 function AuthRoutes() {
   return (
@@ -33,6 +33,7 @@ function NonAuthRoutes() {
 
 export default function App({ currentUser }) {
   let [loading, setLoading] = useState(false);
+  console.log(currentUser)
   useEffect(() => {
     setAuthHeaders(setLoading);
   }, []);

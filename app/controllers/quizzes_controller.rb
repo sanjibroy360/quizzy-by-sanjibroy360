@@ -1,5 +1,10 @@
 class QuizzesController < ApplicationController
-  before_action :authenticate_user, only: [:create]
+  before_action :authenticate_user, only: [:create, :index]
+
+  def index
+    quizzes = current_user.quizzes
+    render json: { success: true, message: "Quizzes fetched successfully.", quizzes: quizzes }, status: :ok
+  end
 
   def create
     quiz = Quiz.new(quiz_params)
