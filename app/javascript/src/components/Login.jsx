@@ -54,7 +54,7 @@ export default function Login() {
   }
 
   if (loading) {
-    return <Loader />;  
+    return <Loader />;
   }
 
   return (
@@ -67,6 +67,7 @@ export default function Login() {
           handleChange={setEmail}
           keyName="login001"
           type="text"
+          value={email}
         />
 
         <Input
@@ -75,6 +76,7 @@ export default function Login() {
           handleChange={setPassword}
           keyName="login002"
           type="password"
+          value={password}
         />
         <div className="flex justify-center">
           {isFormFilled ? (

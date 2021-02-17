@@ -1,6 +1,8 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 
 export default function ActionButton({ action, handleClick, text, id }) {
+  let history = useHistory();
   let icon;
   let backgroundColor;
   let backgroundColorOnHover;
@@ -31,7 +33,7 @@ export default function ActionButton({ action, handleClick, text, id }) {
   return (
     <button
       className={`${textColor} hover:text-white ${backgroundColor} hover:${backgroundColorOnHover} inline-flex items-center border-0 py-1 px-3 focus:outline-none rounded mx-2 text-base mt-4 md:mt-0`}
-      onClick={(event) => handleClick(id, event)}
+      onClick={(event) => handleClick(id, history, event)}
     >
       <i className={icon}></i> {text || "Edit"}
     </button>

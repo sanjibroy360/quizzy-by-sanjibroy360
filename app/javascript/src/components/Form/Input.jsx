@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Input({ name, label, handleChange, type, keyName }) {
+export default function Input({ name, label, handleChange, type, keyName, value }) {
   return (
     <div className="flex justify-between items-center my-4">
       <p>
@@ -13,6 +13,7 @@ export default function Input({ name, label, handleChange, type, keyName }) {
           onChange={(event) => handleChange(event.target.value)}
           key={keyName}
           className="border border-gray-500 py-1 px-3 text-sm text-grey-500 rounded"
+          value={value}
         />
       </div>
     </div>

@@ -1,12 +1,25 @@
 import React from "react";
 import ActionButton from "components/Form/ActionButton";
+import quizApi from "apis/quiz";
+import Toastr from "components/Common/Toaster";
 
-function handleEdit(id, event) {
-  console.log({ event, id });
+function handleEdit(quizId, history, event) {
+  history.push(`/quiz/${quizId}/edit`);
 }
 
-function handleDelete(id, event) {
-  console.log({ event, id });
+async function handleDelete(quizId, history, event) {
+  try {
+    let isConfirm = confirm("Do you really want to delete the quiz?", false);
+    if (isConfirm) {
+      let response = await quizApi.deleteQuiz(quizId);
+      if (response) {
+        Toastr.success(response.data.message);
+        window.location.href = "/";
+      }
+    }
+  } catch (error) {
+    Toastr.error(error.response.data);
+  }
 }
 
 export const COLUMNS = [
@@ -21,13 +34,12 @@ export const COLUMNS = [
     Header: "Actions",
     accessor: "edit",
     Cell: ({ row }) => {
-      console.log(row);
       return (
         <>
-          <ActionButton 
-            action="edit" 
-            handleClick={handleEdit} 
-            text="Edit" 
+          <ActionButton
+            action="edit"
+            handleClick={handleEdit}
+            text="Edit"
             id={row.original.id}
           />
           <ActionButton

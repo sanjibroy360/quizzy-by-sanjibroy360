@@ -9,6 +9,8 @@ import Navbar from "components/Common/Navbar";
 import Loader from "components/Common/Loader";
 import QuizList from "components/Quiz/QuizList";
 import AddQuiz from "components/Quiz/AddQuiz";
+import EditQuiz from "components/Quiz/EditQuiz";
+
 import PageNotFound from "components/PageNotFound";
 
 function AuthRoutes() {
@@ -16,6 +18,7 @@ function AuthRoutes() {
     <Switch>
       <Route exact path="/" component={QuizList} />
       <Route exact path="/quiz/add" component={AddQuiz} />
+      <Route exact path="/quiz/:quizId/edit" component={EditQuiz} />
       <Route component={PageNotFound} />
     </Switch>
   );
@@ -33,7 +36,7 @@ function NonAuthRoutes() {
 
 export default function App({ currentUser }) {
   let [loading, setLoading] = useState(false);
-  console.log(currentUser)
+  
   useEffect(() => {
     setAuthHeaders(setLoading);
   }, []);
