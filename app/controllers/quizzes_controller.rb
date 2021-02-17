@@ -7,6 +7,15 @@ class QuizzesController < ApplicationController
     render json: { success: true, message: "Quizzes fetched successfully.", quizzes: quizzes }, status: :ok
   end
 
+  def show
+    quiz = Quiz.find_by(id: params[:id])
+    if (quiz)
+      render json: { success: true, quiz: quiz }, status: :ok
+    else
+      render json: { success: false, message: "Quiz not found." }, status: 404
+    end
+  end
+
   def create
     quiz = Quiz.new(quiz_params)
 
