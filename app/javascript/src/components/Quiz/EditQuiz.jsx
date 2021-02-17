@@ -21,7 +21,7 @@ export default function EditQuiz() {
 
   async function fetchQuizDetails() {
     try {
-      let response = await quizApi.getQuizDetails(quizId);
+      let response = await quizApi.getQuizToEdit(quizId);
       if (response) {
         setQuizTitle(response.data.quiz.title);
       }

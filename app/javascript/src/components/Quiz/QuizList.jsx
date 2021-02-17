@@ -44,7 +44,7 @@ export default function QuizList() {
 
   return (
     <div>
-      <div className="flex flex-row-reverse w-full mx-auto">
+      <div className="flex flex-row-reverse w-11/12 mx-auto">
         <Button text="+ Add new quiz" handleClick={handleClick} />
       </div>
       {quizzes.length > 0 ? (

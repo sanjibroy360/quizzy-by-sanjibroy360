@@ -10,8 +10,8 @@ import Loader from "components/Common/Loader";
 import QuizList from "components/Quiz/QuizList";
 import AddQuiz from "components/Quiz/AddQuiz";
 import EditQuiz from "components/Quiz/EditQuiz";
-
 import PageNotFound from "components/PageNotFound";
+import ShowQuiz from "components/Quiz/ShowQuiz";
 
 function AuthRoutes() {
   return (
@@ -19,6 +19,7 @@ function AuthRoutes() {
       <Route exact path="/" component={QuizList} />
       <Route exact path="/quiz/add" component={AddQuiz} />
       <Route exact path="/quiz/:quizId/edit" component={EditQuiz} />
+      <Route exact path="/quiz/:quizId" component={ShowQuiz} />
       <Route component={PageNotFound} />
     </Switch>
   );
