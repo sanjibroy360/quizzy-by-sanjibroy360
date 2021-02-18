@@ -1,9 +1,9 @@
 require "test_helper"
-
 class QuizTest < ActiveSupport::TestCase
   def setup
-    @user = users(:ali)
-    @quiz = Quiz.new(title: "Finance", user_id: @user.id)
+    @user = User.create(first_name: "Muhammad", last_name: "Ali", email: "ali@gmail.com", role: "standard", password: "ali_the_champ", password_confirmation: "ali_the_champ")
+    
+    @quiz = Quiz.new(title: "Finance", user_id: @user.id, )
   end
 
   def test_should_be_valid
