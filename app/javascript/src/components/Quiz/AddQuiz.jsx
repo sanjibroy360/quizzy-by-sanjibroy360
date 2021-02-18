@@ -2,34 +2,30 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import Input from "components/Form/Input";
 import Button from "components/Form/Button";
-import { useUserContext } from "../../context/user";
-import quizApi from "../../apis/quiz";
+import quizApi from "apis/quiz";
 import Toastr from "components/Common/Toaster";
 import Loader from "components/Common/Loader";
 
 export default function AddQuiz() {
   let [quizTitle, setQuizTitle] = useState("");
   let [loading, setLoading] = useState(false);
-  let { state } = useUserContext();
   let history = useHistory();
 
   async function handleSubmit(event) {
     try {
       event.preventDefault();
       setLoading(true);
-      if (state.user) {
-        const payload = {
-          quiz: {
-            title: quizTitle,
-            user_id: state.user.id,
-          },
-        };
 
-        let response = await quizApi.addQuiz(payload);
-        if (response) {
-          history.push("/");
-          Toastr.success(response.data.message);
-        }
+      const payload = {
+        quiz: {
+          title: quizTitle,
+        },
+      };
+
+      let response = await quizApi.addQuiz(payload);
+      if (response) {
+        history.push("/");
+        Toastr.success(response.data.message);
       }
     } catch (error) {
       Toastr.error(error.response.data);
