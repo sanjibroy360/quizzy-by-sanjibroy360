@@ -16,7 +16,7 @@ export default function ShowQuiz() {
   }, []);
 
   function handleClick(event) {
-    
+    history.push(`/quiz/${quizId}/question/add`)
   }
 
   async function fetchQuizDetails() {
