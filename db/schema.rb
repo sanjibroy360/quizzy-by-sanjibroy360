@@ -10,7 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_12_170314) do
+ActiveRecord::Schema.define(version: 2021_02_19_201453) do
+
+  create_table "options", force: :cascade do |t|
+    t.string "name", null: false
+    t.boolean "is_correct", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "question_id", null: false
+  end
+
+  create_table "questions", force: :cascade do |t|
+    t.string "description", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "quiz_id", null: false
+  end
 
   create_table "quizzes", force: :cascade do |t|
     t.integer "user_id", null: false

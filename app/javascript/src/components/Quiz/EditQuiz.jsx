@@ -63,7 +63,7 @@ export default function EditQuiz() {
           label="Quiz Name"
           handleChange={setQuizTitle}
           type="text"
-          keyName=""
+          keyName="editquiztitle001"
           value={quizTitle}
         />
         <div className="flex justify-center">

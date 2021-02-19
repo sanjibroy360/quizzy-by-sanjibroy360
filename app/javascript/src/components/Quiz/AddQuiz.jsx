@@ -48,7 +48,7 @@ export default function AddQuiz() {
           label="Quiz Name"
           handleChange={setQuizTitle}
           type="text"
-          keyName=""
+          keyName="addquiztitle001"
           value={quizTitle}
         />
         <div className="flex justify-center">
