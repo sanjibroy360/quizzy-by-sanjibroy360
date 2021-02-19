@@ -12,14 +12,15 @@ class QuestionsController < ApplicationController
     end
   end
 
+  
+  private
+  
   def check_quiz_id
     @quiz = Quiz.find_by(id: params[:quiz_id])
-    render json: { success: false, message: "Quiz not found" }, status: 404 if @quiz.nil?
+    render json: { success: false, message: "Quiz not found" }, status: 404 unless @quiz
   end
-
-  private
-
+  
   def question_params
-    params.required(:question).permit(:description, :user_id, options_attributes: [:name, :isCorrect])
+    params.required(:question).permit(:description, :user_id, options_attributes: [:name, :is_correct])
   end
 end

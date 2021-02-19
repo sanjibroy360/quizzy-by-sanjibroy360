@@ -7,7 +7,7 @@ class Question < ApplicationRecord
   validate :only_one_option_is_correct
 
   def only_one_option_is_correct
-    number_of_correct_answer = options.count { |option| option[:isCorrect] }
+    number_of_correct_answer = options.count { |option| option[:is_correct] }
     if (number_of_correct_answer < 1)
       errors.add(:questions, "should have one correct answer")
     elsif (number_of_correct_answer > 1)

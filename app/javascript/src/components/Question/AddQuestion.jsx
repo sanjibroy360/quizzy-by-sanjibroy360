@@ -68,8 +68,8 @@ export default function AddQuestion() {
       question: {
         description: questionDescription,
         options_attributes: [
-          { name: firstOption, isCorrect: firstOptionIsCorrect },
-          { name: secondOption, isCorrect: secondOptionIsCorrect },
+          { name: firstOption, is_correct: firstOptionIsCorrect },
+          { name: secondOption, is_correct: secondOptionIsCorrect },
         ],
       },
     };
@@ -77,14 +77,14 @@ export default function AddQuestion() {
     if (thirdOption.trim()) {
       payload.question.options_attributes.push({
         name: thirdOption,
-        isCorrect: thirdOptionIsCorrect,
+        is_correct: thirdOptionIsCorrect,
       });
     }
 
     if (fourthOption.trim()) {
       payload.question.options_attributes.push({
         name: fourthOption,
-        isCorrect: fourthOptionIsCorrect,
+        is_correct: fourthOptionIsCorrect,
       });
     }
 
