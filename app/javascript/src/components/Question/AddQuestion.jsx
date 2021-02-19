@@ -15,13 +15,17 @@ export default function AddQuestion() {
   let [quiz, setQuiz] = useState(null);
   let [loading, setLoading] = useState(false);
   let [questionDescription, setQuestionDescription] = useState("");
-  let [correctAnswer, setCorrectAnswer] = useState("");
   let [extraAddedOptionsCount, setExtraAddedOptionsCount] = useState(0);
 
   let [firstOption, setFirstOption] = useState("");
   let [secondOption, setSecondOption] = useState("");
   let [thirdOption, setThirdOption] = useState("");
   let [fourthOption, setFourthOption] = useState("");
+
+  let [firstOptionIsCorrect, setFirstOptionIsCorrect] = useState(false);
+  let [secondOptionIsCorrect, setSecondOptionIsCorrect] = useState(false);
+  let [thirdOptionIsCorrect, setThirdOptionIsCorrect] = useState(false);
+  let [fourthOptionIsCorrect, setFourthOptionIsCorrect] = useState(false);
 
   let addedOptions = [
     { value: thirdOption, setOption: setThirdOption },
@@ -62,17 +66,25 @@ export default function AddQuestion() {
     let payload = {
       question: {
         description: questionDescription,
-        options: [firstOption, secondOption],
+        options: [
+          { value: firstOption, isCorrect: firstOptionIsCorrect },
+          { value: secondOption, isCorrect: secondOptionIsCorrect },
+        ],
       },
-      answer: correctAnswer,
     };
 
     if (thirdOption.trim()) {
-      payload.question.options.push(thirdOption);
+      payload.question.options.push({
+        value: thirdOption,
+        isCorrect: thirdOptionIsCorrect,
+      });
     }
 
     if (fourthOption.trim()) {
-      payload.question.options.push(fourthOption);
+      payload.question.options.push({
+        value: fourthOption,
+        isCorrect: fourthOptionIsCorrect,
+      });
     }
 
     return payload;
@@ -89,9 +101,14 @@ export default function AddQuestion() {
 
   function handleCorrectAnswer(event) {
     let optionNo = event.target.value - 1;
-    let options = [firstOption, secondOption, thirdOption, fourthOption];
+    let setCorrectOption = [
+      setFirstOptionIsCorrect,
+      setSecondOptionIsCorrect,
+      setThirdOptionIsCorrect,
+      setFourthOptionIsCorrect,
+    ];
     if (optionNo >= 0) {
-      setCorrectAnswer(options[optionNo]);
+      setCorrectOption[optionNo](true);
     }
   }
 
@@ -156,7 +173,6 @@ export default function AddQuestion() {
               fourthOption,
             ]}
             handleChange={handleCorrectAnswer}
-            value={correctAnswer}
           />
 
           {isFormFilled() ? (

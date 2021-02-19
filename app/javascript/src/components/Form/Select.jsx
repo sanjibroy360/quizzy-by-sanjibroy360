@@ -7,7 +7,7 @@ export default function Select({ label, values, texts, handleChange }) {
         <label className="mr-2 text-lg">{label}</label>
       </p>
       <div className="ml-12">
-        <select name="correctAnswer" onChange={(event) => handleChange(event)}>
+        <select name="correctAnswer" onChange={(event) => handleChange(event)} className="px-4 py-1 rounded cursor-pointer">
           {values.map((value, index) => {
             return (
               <React.Fragment key={label + value + index}>
