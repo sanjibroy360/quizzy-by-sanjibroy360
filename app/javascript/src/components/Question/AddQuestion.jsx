@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import quizApi from "apis/quiz";
+import questionApi from "apis/question";
 import Toastr from "components/Common/Toaster";
 import Loader from "components/Common/Loader";
 import Button from "components/Form/Button";
@@ -66,23 +67,23 @@ export default function AddQuestion() {
     let payload = {
       question: {
         description: questionDescription,
-        options: [
-          { value: firstOption, isCorrect: firstOptionIsCorrect },
-          { value: secondOption, isCorrect: secondOptionIsCorrect },
+        options_attributes: [
+          { name: firstOption, isCorrect: firstOptionIsCorrect },
+          { name: secondOption, isCorrect: secondOptionIsCorrect },
         ],
       },
     };
 
     if (thirdOption.trim()) {
-      payload.question.options.push({
-        value: thirdOption,
+      payload.question.options_attributes.push({
+        name: thirdOption,
         isCorrect: thirdOptionIsCorrect,
       });
     }
 
     if (fourthOption.trim()) {
-      payload.question.options.push({
-        value: fourthOption,
+      payload.question.options_attributes.push({
+        name: fourthOption,
         isCorrect: fourthOptionIsCorrect,
       });
     }
@@ -112,12 +113,20 @@ export default function AddQuestion() {
     }
   }
 
-  function handleSubmit(event) {
-    event.preventDefault();
-    if (isFormFilled()) {
-      let payload = generatePayload();
+  async function handleSubmit(event) {
+    try {
+      event.preventDefault();
+      if (isFormFilled()) {
+        let payload = generatePayload();
+        let response = await questionApi.createQuestion(payload, quizId);
+        if (response) {
+          Toastr.success(response.data.message);
+        }
+      }
+    } catch (error) {
+      Toastr.success(error.response.data.message);
+    } finally {
       resetForm();
-      console.log(payload);
     }
   }
 

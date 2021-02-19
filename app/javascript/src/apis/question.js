@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const createQuestion = (payload) => axios.post("/questions", payload);
+const createQuestion = (payload, quizId) =>
+  axios.post(`/quizzes/${quizId}/questions`, payload);
 
 const questionApi = {
   createQuestion,
