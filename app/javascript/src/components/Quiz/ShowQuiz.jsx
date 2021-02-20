@@ -4,10 +4,12 @@ import { useParams, useHistory } from "react-router-dom";
 import quizApi from "apis/quiz";
 import Toastr from "components/Common/Toaster";
 import Loader from "components/Common/Loader";
+import QuestionList from "components/Question/QuestionList";
 
 export default function ShowQuiz() {
   let { quizId } = useParams();
   let [quiz, setQuiz] = useState(null);
+  let [questionCount, setQuestionCount] = useState(0);
   let [loading, setLoading] = useState(false);
   let history = useHistory();
 
@@ -16,7 +18,7 @@ export default function ShowQuiz() {
   }, []);
 
   function handleClick(event) {
-    history.push(`/quiz/${quizId}/question/add`)
+    history.push(`/quiz/${quizId}/question/add`);
   }
 
   async function fetchQuizDetails() {
@@ -25,6 +27,8 @@ export default function ShowQuiz() {
       let response = await quizApi.showQuizDetails(quizId);
       if (response) {
         setQuiz(response.data.quiz);
+        console.log(response.data.questions_count);
+        setQuestionCount(response.data.questions_count);
       }
     } catch (error) {
       history.push("/");
@@ -46,12 +50,17 @@ export default function ShowQuiz() {
           <Button text="+ Add question" handleClick={handleClick} />
         </div>
       </div>
-
-      <div className="mt-32 w-11/12">
-        <p className="text-gray-500 text-center">
-          There are no questions in this quiz.
-        </p>
-      </div>
+      {questionCount > 0 ? (
+        <div className="w-11/12 mx-auto">
+          <QuestionList />
+        </div>
+      ) : (
+        <div className="mt-32 w-11/12">
+          <p className="text-gray-500 text-center">
+            There are no questions in this quiz.
+          </p>
+        </div>
+      )}
     </div>
   );
 }
