@@ -9,7 +9,7 @@ class QuizzesController < ApplicationController
 
   def show
     if (@quiz)
-      render json: { success: true, quiz: @quiz }, status: :ok
+      render json: { success: true, quiz: @quiz, questions_count: @quiz.questions.count}, status: :ok
     else
       render json: { success: false, message: "Quiz not found." }, status: 404
     end

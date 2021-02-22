@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
-import quizApi from "apis/quiz";
+import { useParams } from "react-router-dom";
 import questionApi from "apis/question";
 import Toastr from "components/Common/Toaster";
 import Loader from "components/Common/Loader";
@@ -11,8 +10,9 @@ import DisabledButton from "components/Form/DisabledButton";
 import AddMoreOption from "./AddMoreOption";
 import Select from "../Form/Select";
 
-export default function AddQuestion() {
-  let { quizId } = useParams();
+export default function EditQuestion() {
+  let { quizId, questionId } = useParams();
+  let [prevOptions, setPrevOptions] = useState([]);
   let [quiz, setQuiz] = useState(null);
   let [loading, setLoading] = useState(false);
   let [questionDescription, setQuestionDescription] = useState("");
@@ -37,12 +37,38 @@ export default function AddQuestion() {
     fetchQuizDetails();
   }, []);
 
+  function setOptions(options) {
+    let optionValueSetter = [
+      setFirstOption,
+      setSecondOption,
+      setThirdOption,
+      setFourthOption,
+    ];
+
+    let optionIsCorrectValueSetter = [
+      setFirstOptionIsCorrect,
+      setSecondOptionIsCorrect,
+      setThirdOptionIsCorrect,
+      setFourthOptionIsCorrect,
+    ];
+
+    options.forEach((option, i) => {
+      optionValueSetter[i](option.name);
+      optionIsCorrectValueSetter[i](option.is_correct);
+    });
+    setExtraAddedOptionsCount(options.length - 2);
+  }
+
   async function fetchQuizDetails() {
     try {
       setLoading(true);
-      let response = await quizApi.showQuizDetails(quizId);
+      let response = await questionApi.getQuestionToEdit(quizId, questionId);
       if (response) {
-        setQuiz(response.data.quiz);
+        let { quiz, options } = response.data;
+        setQuiz(quiz);
+        setQuestionDescription(response.data.description);
+        setPrevOptions(options);
+        setOptions(options);
       }
     } catch (error) {
       Toastr.error(error.response.data);
@@ -88,6 +114,15 @@ export default function AddQuestion() {
       });
     }
 
+    prevOptions.forEach((option, i) => {
+      if (payload.question.options_attributes[i]) {
+        payload.question.options_attributes[i].id = option.id;
+      } else {
+        option.is_correct = false;
+        payload.question.options_attributes.push(option);
+        payload.question.options_attributes[i]._destroy = true;
+      }
+    });
     return payload;
   }
 
@@ -123,14 +158,18 @@ export default function AddQuestion() {
       event.preventDefault();
       if (isFormFilled()) {
         let payload = generatePayload();
-        let response = await questionApi.createQuestion(payload, quizId);
+        let response = await questionApi.updateQuestion(
+          quizId,
+          questionId,
+          payload
+        );
         if (response) {
           window.location.href = `/quiz/${quizId}`;
           Toastr.success(response.data.message);
         }
       }
     } catch (error) {
-      Toastr.success(error.response.data.message);
+      Toastr.success(error.response.data);
     } finally {
       resetForm();
     }
@@ -141,9 +180,7 @@ export default function AddQuestion() {
   }
   return (
     <div className="w-11/12 mx-auto">
-      <p className="text-xl font-medium text-gray-600">
-        <Link to={`/quiz/${quizId}`}>{quiz?.title}</Link>
-      </p>
+      <p className="text-xl font-medium text-gray-600">{quiz?.title}</p>
 
       <div className="w-1/2">
         <form>

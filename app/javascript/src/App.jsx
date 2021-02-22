@@ -13,6 +13,7 @@ import EditQuiz from "components/Quiz/EditQuiz";
 import PageNotFound from "components/PageNotFound";
 import ShowQuiz from "components/Quiz/ShowQuiz";
 import AddQuestion from "components/Question/AddQuestion";
+import EditQuestion from "components/Question/EditQuestion";
 
 function AuthRoutes() {
   return (
@@ -22,6 +23,11 @@ function AuthRoutes() {
       <Route exact path="/quiz/:quizId/edit" component={EditQuiz} />
       <Route exact path="/quiz/:quizId" component={ShowQuiz} />
       <Route exact path="/quiz/:quizId/question/add" component={AddQuestion} />
+      <Route
+        exact
+        path="/quiz/:quizId/question/:questionId/edit"
+        component={EditQuestion}
+      />
       <Route component={PageNotFound} />
     </Switch>
   );

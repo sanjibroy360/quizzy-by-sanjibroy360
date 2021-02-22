@@ -7,12 +7,22 @@ export default function Select({ label, values, texts, handleChange }) {
         <label className="mr-2 text-lg">{label}</label>
       </p>
       <div className="ml-12">
-        <select name="correctAnswer" onChange={(event) => handleChange(event)} className="px-4 py-1 rounded cursor-pointer">
-          {values.map((value, index) => {
+        <select
+          name="correctAnswer"
+          onChange={(event) => handleChange(event)}
+          className="px-4 py-1 rounded cursor-pointer"
+        >
+          {texts.map((text, index) => {
             return (
-              <React.Fragment key={label + value + index}>
-                {texts[index].trim() ? (
-                  <option value={value}>{texts[index]}</option>
+              <React.Fragment key={label + values[index] + index}>
+                {text.trim() ? (
+                  <>
+                    {values[index] ? (
+                      <option value={values[index]}>{`Option ${index}`}</option>
+                    ) : (
+                      <option value={values[index]}>Select</option>
+                    )}
+                  </>
                 ) : (
                   <></>
                 )}
