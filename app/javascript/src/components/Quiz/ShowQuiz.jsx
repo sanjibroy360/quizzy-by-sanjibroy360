@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Button from "components/Form/Button";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory, Link } from "react-router-dom";
 import quizApi from "apis/quiz";
 import Toastr from "components/Common/Toaster";
 import Loader from "components/Common/Loader";
@@ -27,7 +27,6 @@ export default function ShowQuiz() {
       let response = await quizApi.showQuizDetails(quizId);
       if (response) {
         setQuiz(response.data.quiz);
-        console.log(response.data.questions_count);
         setQuestionCount(response.data.questions_count);
       }
     } catch (error) {
@@ -45,7 +44,9 @@ export default function ShowQuiz() {
   return (
     <div>
       <div className="flex justify-between items-center w-11/12 mx-auto">
-        <p className="text-xl font-medium text-gray-600">{quiz?.title}</p>
+        <p className="text-xl font-medium text-gray-600">
+          <Link to={`/quiz/${quiz?.id}`}>{quiz?.title}</Link>
+        </p>
         <div>
           <Button text="+ Add question" handleClick={handleClick} />
         </div>

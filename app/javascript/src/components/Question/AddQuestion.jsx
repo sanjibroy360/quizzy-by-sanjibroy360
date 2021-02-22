@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import quizApi from "apis/quiz";
 import questionApi from "apis/question";
 import Toastr from "components/Common/Toaster";
@@ -108,9 +108,14 @@ export default function AddQuestion() {
       setThirdOptionIsCorrect,
       setFourthOptionIsCorrect,
     ];
-    if (optionNo >= 0) {
-      setCorrectOption[optionNo](true);
-    }
+
+    setCorrectOption.forEach((setIsCorrect, index) => {
+      if (optionNo == index) {
+        setIsCorrect(true);
+      } else {
+        setIsCorrect(false);
+      }
+    });
   }
 
   async function handleSubmit(event) {
@@ -120,6 +125,7 @@ export default function AddQuestion() {
         let payload = generatePayload();
         let response = await questionApi.createQuestion(payload, quizId);
         if (response) {
+          window.location.href = `/quiz/${quizId}`;
           Toastr.success(response.data.message);
         }
       }
@@ -135,7 +141,9 @@ export default function AddQuestion() {
   }
   return (
     <div className="w-11/12 mx-auto">
-      <p className="text-xl font-medium text-gray-600">{quiz?.title}</p>
+      <p className="text-xl font-medium text-gray-600">
+        <Link to={`/quiz/${quizId}`}>{quiz?.title}</Link>
+      </p>
 
       <div className="w-1/2">
         <form>

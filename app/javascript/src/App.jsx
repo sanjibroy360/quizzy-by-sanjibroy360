@@ -25,7 +25,7 @@ function AuthRoutes() {
       <Route exact path="/quiz/:quizId/question/add" component={AddQuestion} />
       <Route
         exact
-        path="/quizzes/:quizId/questions/:questionId/edit"
+        path="/quiz/:quizId/question/:questionId/edit"
         component={EditQuestion}
       />
       <Route component={PageNotFound} />
