@@ -47,8 +47,13 @@ export default function ShowQuiz() {
         <p className="text-xl font-medium text-gray-600">
           <Link to={`/quiz/${quiz?.id}`}>{quiz?.title}</Link>
         </p>
-        <div>
+        <div className="flex items-center">
           <Button text="+ Add question" handleClick={handleClick} />
+          {questionCount > 0 && (
+            <div className="ml-5">
+              <Button text="Publish" />
+            </div>
+          )}
         </div>
       </div>
       {questionCount > 0 ? (
