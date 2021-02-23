@@ -13,13 +13,16 @@ const showQuizDetails = (quizId) => axios.get(`/quizzes/${quizId}`);
 
 const quizList = () => axios.get("/quizzes");
 
+const publishQuiz = (quizId) => axios.patch(`/quizzes/${quizId}/publish`);
+
 const quizApi = {
   addQuiz,
   quizList,
   updateQuiz,
   getQuizToEdit,
   deleteQuiz,
-  showQuizDetails
+  showQuizDetails,
+  publishQuiz,
 };
 
 export default quizApi;
