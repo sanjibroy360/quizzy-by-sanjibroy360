@@ -5,13 +5,16 @@ import quizApi from "apis/quiz";
 import Toastr from "components/Common/Toaster";
 import Loader from "components/Common/Loader";
 import QuestionList from "components/Question/QuestionList";
+import axios from "axios";
 
 export default function ShowQuiz() {
   let { quizId } = useParams();
+  let [slug, setSlug] = useState("");
   let [quiz, setQuiz] = useState(null);
   let [questionCount, setQuestionCount] = useState(0);
   let [loading, setLoading] = useState(false);
   let history = useHistory();
+  let origin = window.location.origin + "/public";
 
   useEffect(() => {
     fetchQuizDetails();
@@ -21,12 +24,23 @@ export default function ShowQuiz() {
     history.push(`/quiz/${quizId}/question/add`);
   }
 
+  async function handlePublish(event) {
+    try {
+      let response = await quizApi.publishQuiz(quizId);
+      setSlug(response.data.slug);
+      Toastr.success(response.data.message);
+    } catch (error) {
+      Toastr.success(error.response.data.message);
+    }
+  }
+
   async function fetchQuizDetails() {
     try {
       setLoading(true);
       let response = await quizApi.showQuizDetails(quizId);
       if (response) {
         setQuiz(response.data.quiz);
+        setSlug(response.data.quiz?.slug);
         setQuestionCount(response.data.questions_count);
       }
     } catch (error) {
@@ -44,14 +58,19 @@ export default function ShowQuiz() {
   return (
     <div>
       <div className="flex justify-between items-center w-11/12 mx-auto">
-        <p className="text-xl font-medium text-gray-600">
+        <div className="flex text-xl font-medium text-gray-600">
           <Link to={`/quiz/${quiz?.id}`}>{quiz?.title}</Link>
-        </p>
+          {slug && (
+            <Link to="#" className="text-sm ml-4 text-blue-500 hover:underline">
+              {origin + "/" + slug}
+            </Link>
+          )}
+        </div>
         <div className="flex items-center">
           <Button text="+ Add question" handleClick={handleClick} />
-          {questionCount > 0 && (
+          {!slug && questionCount > 0 && (
             <div className="ml-5">
-              <Button text="Publish" />
+              <Button text="Publish" handleClick={handlePublish} />
             </div>
           )}
         </div>
