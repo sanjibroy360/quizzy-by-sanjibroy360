@@ -7,6 +7,7 @@ import PageNotFound from "components/PageNotFound";
 import ShowQuiz from "components/Quiz/ShowQuiz";
 import AddQuestion from "components/Question/AddQuestion";
 import EditQuestion from "components/Question/EditQuestion";
+import NewAttempt from "./components/Attempt/NewAttempt";
 
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 import { useUserContext } from "./context/user";
@@ -24,6 +25,7 @@ function AuthRoutes() {
         path="/quiz/:quizId/question/:questionId/edit"
         component={EditQuestion}
       />
+      <Route exact path="/public/:slug/attempt/new" component={NewAttempt} />
       <Route component={PageNotFound} />
     </Switch>
   );
@@ -34,6 +36,7 @@ function NonAuthRoutes() {
     <Switch>
       <Route exact path="/" component={QuizList} />
       <Route exact path="/login" component={Login} />
+      <Route exact path="/public/:slug/attempt/new" component={NewAttempt} />
       <Route component={PageNotFound} />
     </Switch>
   );

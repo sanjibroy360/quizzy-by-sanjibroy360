@@ -1,9 +1,21 @@
 class PublicController < ApplicationController
-  before_action :get_quiz, only: [:show]
+  before_action :get_quiz, only: [:show, :details, :questions]
 
   def show
+    redirect_to "/public/#{params[:slug]}/attempt/new"
+  end
+
+  def details
+    render json: { success: false, quiz: @quiz }, status: :ok
+  end
+
+  def questions
     @questions = @quiz.questions
-    render json: { success: true, questions: @questions }, status: :ok
+    if @questions.count > 0
+      render json: @questions.to_json(only: [:id, :description], include: [:options]), status: :ok
+    else
+      render json: { success: false, message: "There are no questions in this quiz" }, status: :unprocessable_entity
+    end
   end
 
   private
