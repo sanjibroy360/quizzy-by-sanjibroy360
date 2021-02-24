@@ -6,6 +6,7 @@ import { useUserContext } from "../../context/user";
 import Toastr from "components/Common/Toaster";
 import Loader from "components/Common/Loader";
 import ReactTable from "./ReactTable";
+import { COLUMNS } from "../../utils/QuizListColumns";
 
 export default function QuizList() {
   let history = useHistory();
@@ -48,7 +49,7 @@ export default function QuizList() {
         <Button text="+ Add new quiz" handleClick={handleClick} />
       </div>
       {quizzes.length > 0 ? (
-        <ReactTable quizzes={quizzes} />
+        <ReactTable tableData={quizzes} tableColumns={COLUMNS} />
       ) : (
         <div className="mt-32">
           <p className="text-gray-500 text-center">

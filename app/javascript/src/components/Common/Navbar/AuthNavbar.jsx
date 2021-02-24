@@ -31,7 +31,7 @@ export default function AuthNavbar({ user }) {
           <span class="ml-3 text-xl">Quizzy</span>
         </Link>
         <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
-          <Link to="#" class="mr-5 hover:text-gray-900">
+          <Link to="/reports" class="mr-5 hover:text-gray-900">
             Reports
           </Link>
           <Link to="#" class="mr-5 hover:text-gray-900">

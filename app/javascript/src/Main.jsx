@@ -11,6 +11,7 @@ import NewAttempt from "./components/Attempt/NewAttempt";
 
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 import { useUserContext } from "./context/user";
+import ShowReport from "components/Report/ShowReport";
 
 function AuthRoutes() {
   return (
@@ -25,7 +26,7 @@ function AuthRoutes() {
         path="/quiz/:quizId/question/:questionId/edit"
         component={EditQuestion}
       />
-      <Route exact path="/public/:slug/attempt/new" component={NewAttempt} />
+      <Route exact path="/reports" component={ShowReport} />
       <Route component={PageNotFound} />
     </Switch>
   );
