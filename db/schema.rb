@@ -10,7 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_23_053837) do
+ActiveRecord::Schema.define(version: 2021_02_23_193326) do
+
+  create_table "attempt_answers", force: :cascade do |t|
+    t.integer "attempt_id", null: false
+    t.integer "question_id", null: false
+    t.integer "option_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "attempts", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "quiz_id", null: false
+    t.boolean "is_submitted", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "options", force: :cascade do |t|
     t.string "name", null: false
@@ -43,7 +59,7 @@ ActiveRecord::Schema.define(version: 2021_02_23_053837) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "role", default: 0, null: false
-    t.string "password_digest", null: false
+    t.string "password_digest"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
