@@ -68,19 +68,21 @@ export default function Questions({ attemptId, userId, quizId }) {
       {submitted ? (
         <ShowAnswers questions={questions} attemptId={attemptId} />
       ) : (
-        questions?.map((question, i) => {
-          return (
-            <Question
-              question={question}
-              questionNumber={i + 1}
-              storeAnswer={storeAnswer}
-            />
-          );
-        })
+        <>
+          {questions?.map((question, i) => {
+            return (
+              <Question
+                question={question}
+                questionNumber={i + 1}
+                storeAnswer={storeAnswer}
+              />
+            );
+          })}
+          <div className="w-11/12 mx-auto my-4">
+            <Button type="submit" handleClick={handleSubmit} />
+          </div>
+        </>
       )}
-      <div className="w-11/12 mx-auto my-4">
-        <Button type="submit" handleClick={handleSubmit} />
-      </div>
     </>
   );
 }

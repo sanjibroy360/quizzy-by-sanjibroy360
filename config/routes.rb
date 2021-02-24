@@ -12,13 +12,12 @@ Rails.application.routes.draw do
       get :details
       get :questions
     end
-    resources :attempts, only: [:create, :update] do
-      member do
-        get :submitted_answers
-      end
+  end
+  resources :attempts, only: [:create, :update, :index] do
+    member do
+      get :submitted_answers
     end
   end
-
   resource :session, only: [:create, :destroy]
   get "*path", to: "home#index", via: :all
 end

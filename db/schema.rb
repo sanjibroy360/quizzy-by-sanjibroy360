@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_23_193326) do
+ActiveRecord::Schema.define(version: 2021_02_24_142041) do
 
   create_table "attempt_answers", force: :cascade do |t|
     t.integer "attempt_id", null: false
@@ -26,6 +26,8 @@ ActiveRecord::Schema.define(version: 2021_02_23_193326) do
     t.boolean "is_submitted", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "correct_answers_count", default: 0
+    t.integer "incorrect_answers_count", default: 0
   end
 
   create_table "options", force: :cascade do |t|

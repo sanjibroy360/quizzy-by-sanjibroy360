@@ -41,7 +41,11 @@ export default function NewAttempt() {
           quizId={quiz?.id}
         />
       ) : (
-        <UserLogin setAttempt={setAttempt} quizTitle={quiz?.title} />
+        <UserLogin
+          setAttempt={setAttempt}
+          quizTitle={quiz?.title}
+          quizId={quiz?.id}
+        />
       )}
     </div>
   );

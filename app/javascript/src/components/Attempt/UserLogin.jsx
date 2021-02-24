@@ -7,7 +7,7 @@ import Toastr from "components/Common/Toaster";
 
 import publicApi from "apis/public";
 
-export default function UserLogin({ setAttempt, quizTitle }) {
+export default function UserLogin({ setAttempt, quizTitle, quizId }) {
   let [firstName, setFirstName] = useState("");
   let [lastName, setLastName] = useState("");
   let [email, setEmail] = useState("");
@@ -22,6 +22,7 @@ export default function UserLogin({ setAttempt, quizTitle }) {
           last_name: lastName,
           email: email,
         },
+        quiz_id: quizId
       };
       let response = await publicApi.attemptQuiz(payload, slug);
       if (response) {

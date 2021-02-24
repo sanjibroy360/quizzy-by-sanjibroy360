@@ -1,7 +1,28 @@
 class AttemptsController < ApplicationController
-  before_action :check_quiz_slug, only: [:create, :update, :submitted_answers]
   before_action :check_for_previous_unsubmitted_attempt, only: [:create]
   before_action :get_attempt, only: [:update]
+  before_action :authenticate_user, only: [:index]
+
+  def index
+    @attempts = Attempt.where(is_submitted: true)
+    @reports = []
+    if @attempts.count > 0
+      @attempts.each do |attempt|
+        user = attempt.user
+        quiz = attempt.quiz
+
+        report = { quiz_name: quiz.title,
+                 user_name: "#{user.first_name} #{user.last_name}",
+                 email: user.email,
+                 correct_answers_count: attempt.correct_answers_count,
+                 incorrect_answers_count: attempt.incorrect_answers_count }
+        @reports.push(report)
+      end
+      render json: { reports: @reports }, status: :ok
+    else
+      render json: { message: "No attempts found" }, status: :unprocessable_entity
+    end
+  end
 
   def create
     if @user.nil?
@@ -22,6 +43,7 @@ class AttemptsController < ApplicationController
     if (@attempt.is_submitted?)
       render json: { message: "You have already submitted the quiz" }, status: unprocessable_entity
     else
+      @attempt.save_result
       @attempt.update(attempt_params)
       render json: { message: "Answers submitted successfully", attempt: @attempt }, status: :ok
     end
@@ -32,7 +54,7 @@ class AttemptsController < ApplicationController
     if @attempt
       @attempt_answers = @attempt.attempt_answers
       if @attempt_answers.count > 0
-        render json: { attempt_answers: @attempt_answers, correct_answer_count: @attempt.correct_answer_count, incorrect_answer_count: @attempt.incorrect_answer_count }, status: :ok
+        render json: { attempt_answers: @attempt_answers, correct_answer_count: @attempt.correct_answers_count, incorrect_answer_count: @attempt.incorrect_answers_count }, status: :ok
       else
         render json: { message: "You have not answered any question" }, status: :unprocessable_entity
       end
@@ -45,6 +67,7 @@ class AttemptsController < ApplicationController
 
   def check_for_previous_unsubmitted_attempt
     @user = User.find_by(email: params[:user][:email])
+    @quiz = Quiz.find_by(id: params[:quiz_id])
     if @user
       @attempt = Attempt.find_by(user_id: @user.id, quiz_id: @quiz.id)
       if (@attempt)
@@ -60,11 +83,6 @@ class AttemptsController < ApplicationController
   def get_attempt
     @attempt = Attempt.find_by(quiz_id: params[:quiz_id], user_id: params[:user_id])
     render json: { message: "You have not attempted the quiz." }, status: 404 unless @attempt
-  end
-
-  def check_quiz_slug
-    @quiz = Quiz.find_by(slug: params[:public_slug])
-    render json: { success: false, message: "Quiz not found" }, status: 404 unless @quiz
   end
 
   def user_params
