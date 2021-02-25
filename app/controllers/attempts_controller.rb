@@ -4,20 +4,8 @@ class AttemptsController < ApplicationController
   before_action :authenticate_user, only: [:index]
 
   def index
-    @attempts = Attempt.where(is_submitted: true)
-    @reports = []
-    if @attempts.count > 0
-      @attempts.each do |attempt|
-        user = attempt.user
-        quiz = attempt.quiz
-
-        report = { quiz_name: quiz.title,
-                 user_name: "#{user.first_name} #{user.last_name}",
-                 email: user.email,
-                 correct_answers_count: attempt.correct_answers_count,
-                 incorrect_answers_count: attempt.incorrect_answers_count }
-        @reports.push(report)
-      end
+    @reports = Attempt.generate_report
+    if @reports.count > 0
       render json: { reports: @reports }, status: :ok
     else
       render json: { message: "No attempts found" }, status: :unprocessable_entity
@@ -49,7 +37,7 @@ class AttemptsController < ApplicationController
     end
   end
 
-  def submitted_answers
+  def show
     @attempt = Attempt.find_by(id: params[:id])
     if @attempt
       @attempt_answers = @attempt.attempt_answers

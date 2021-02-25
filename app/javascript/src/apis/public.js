@@ -11,7 +11,7 @@ const submitAnswers = (payload, slug, attemptId) =>
   axios.put(`/attempts/${attemptId}`, payload);
 
 const getSubmittedAnswers = (slug, attemptId) =>
-  axios.get(`/attempts/${attemptId}/submitted_answers`);
+  axios.get(`/attempts/${attemptId}`);
 
 const publicApi = {
   getQuizDetails,

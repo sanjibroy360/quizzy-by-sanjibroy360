@@ -20,8 +20,26 @@ class Attempt < ApplicationRecord
     end
   end
 
-  def save_result 
+  def save_result
     self.correct_answers_count = correct_answers_count
     self.incorrect_answers_count = incorrect_answers_count
+  end
+
+  def self.generate_report
+    attempts = Attempt.where(is_submitted: true)
+    reports = []
+
+    attempts.each do |attempt|
+      user = attempt.user
+      quiz = attempt.quiz
+
+      report = { quiz_name: quiz.title,
+                 user_name: "#{user.first_name} #{user.last_name}",
+                 email: user.email,
+                 correct_answers_count: attempt.correct_answers_count,
+                 incorrect_answers_count: attempt.incorrect_answers_count }
+      reports.push(report)
+    end
+    return reports
   end
 end

@@ -1,0 +1,2 @@
+module ReportDownloadsHelper
+end
