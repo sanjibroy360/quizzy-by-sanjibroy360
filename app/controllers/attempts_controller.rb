@@ -1,16 +1,6 @@
 class AttemptsController < ApplicationController
   before_action :check_for_previous_unsubmitted_attempt, only: [:create]
   before_action :get_attempt, only: [:update]
-  before_action :authenticate_user, only: [:index]
-
-  def index
-    @reports = Attempt.generate_report
-    if @reports.count > 0
-      render json: { reports: @reports }, status: :ok
-    else
-      render json: { message: "No attempts found" }, status: :unprocessable_entity
-    end
-  end
 
   def create
     if @user.nil?
@@ -31,7 +21,6 @@ class AttemptsController < ApplicationController
     if (@attempt.is_submitted?)
       render json: { message: "You have already submitted the quiz" }, status: unprocessable_entity
     else
-      @attempt.save_result
       @attempt.update(attempt_params)
       render json: { message: "Answers submitted successfully", attempt: @attempt }, status: :ok
     end
