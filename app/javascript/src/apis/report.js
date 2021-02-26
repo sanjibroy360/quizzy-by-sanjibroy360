@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const getReport = () => axios.get(`/attempts`);
+const getReport = () => axios.get(`/reports`);
 
 const prepareReport = () => axios.post("/report_download");
 

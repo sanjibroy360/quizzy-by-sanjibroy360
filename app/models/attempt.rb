@@ -5,6 +5,7 @@ class Attempt < ApplicationRecord
   has_many :users
   has_many :attempt_answers, dependent: :destroy
   accepts_nested_attributes_for :attempt_answers
+  before_save :save_result
 
   def correct_answers_count
     attempt_answers.count do |answer|
