@@ -12,11 +12,9 @@ import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 import { useUserContext } from "./context/user";
 import ShowReport from "components/Report/ShowReport";
 import DownloadReport from "components/Report/DownloadReport";
-
-
+import Hompage from "./Hompage";
 
 function AuthRoutes() {
-
   return (
     <Switch>
       <Route exact path="/" component={QuizList} />
@@ -39,7 +37,7 @@ function AuthRoutes() {
 function NonAuthRoutes() {
   return (
     <Switch>
-      <Route exact path="/" component={QuizList} />
+      <Route exact path="/" component={Hompage} />
       <Route exact path="/login" component={Login} />
       <Route exact path="/public/:slug/attempt/new" component={NewAttempt} />
       <Route component={PageNotFound} />
@@ -48,7 +46,6 @@ function NonAuthRoutes() {
 }
 
 export default function Main() {
-
   let { state } = useUserContext();
   // let [report, setReport] = useState(null)
   return <div>{state.user?.id ? <AuthRoutes /> : <NonAuthRoutes />}</div>;
