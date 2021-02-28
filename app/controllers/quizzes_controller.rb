@@ -5,14 +5,14 @@ class QuizzesController < ApplicationController
 
   def index
     quizzes = current_user.quizzes
-    render json: { success: true, message: "Quizzes fetched successfully.", quizzes: quizzes }, status: :ok
+    render json: { message: "Quizzes fetched successfully.", quizzes: quizzes }, status: :ok
   end
 
   def show
     if (@quiz)
-      render json: { success: true, quiz: @quiz, questions_count: @quiz.questions.count }, status: :ok
+      render json: { quiz: @quiz, questions_count: @quiz.questions.count }, status: :ok
     else
-      render json: { success: false, message: "Quiz not found." }, status: 404
+      render json: { message: "Quiz not found." }, status: 404
     end
   end
 
@@ -20,25 +20,25 @@ class QuizzesController < ApplicationController
     quiz = current_user.quizzes.build(quiz_params)
 
     if quiz.save
-      render json: { success: true, message: "Quiz created successfully.", quiz: quiz }, status: :ok
+      render json: { message: "Quiz created successfully.", quiz: quiz }, status: :ok
     else
-      render json: { success: false, message: quiz.errors.full_messages }, status: :unprocessable_entity
+      render json: { message: quiz.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
   def edit
     if @quiz
-      render json: { success: true, quiz: @quiz }, status: :ok
+      render json: { quiz: @quiz }, status: :ok
     else
-      render json: { success: false, message: "Quiz not found." }, status: 404
+      render json: { message: "Quiz not found." }, status: 404
     end
   end
 
   def update
     if @quiz.update(title: params[:quiz][:title])
-      render json: { success: true, message: "Quiz updated successfully.", quiz: @quiz }, status: :ok
+      render json: { message: "Quiz updated successfully.", quiz: @quiz }, status: :ok
     else
-      render json: { success: false, message: @quiz.errors.full_messages }, status: 400
+      render json: { message: @quiz.errors.full_messages }, status: 400
     end
   end
 
@@ -46,15 +46,15 @@ class QuizzesController < ApplicationController
     @quiz.generate_slug
 
     if @quiz.save
-      render json: { success: true, message: "Quiz published successfully", slug: @quiz.slug }, status: :ok
+      render json: { message: "Quiz published successfully", slug: @quiz.slug }, status: :ok
     else
-      render json: { success: false, message: @quiz.errors.full_messages }, status: :unprocessable_entity
+      render json: { message: @quiz.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
   def destroy
     @quiz.destroy
-    render json: { success: true, message: "Quiz deleted successfully" }, status: :ok
+    render json: { message: "Quiz deleted successfully" }, status: :ok
   end
 
   private
@@ -68,6 +68,6 @@ class QuizzesController < ApplicationController
   end
 
   def ensure_quiz_not_published
-    render json: { success: false, message: "Quiz already published" }, status: 400 if @quiz.slug
+    render json: { message: "Quiz already published" }, status: 400 if @quiz.slug
   end
 end

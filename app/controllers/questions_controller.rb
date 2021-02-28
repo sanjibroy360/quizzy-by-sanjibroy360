@@ -16,9 +16,9 @@ class QuestionsController < ApplicationController
     @question = @quiz.questions.build(question_params)
 
     if @question.save
-      render json: { success: true, message: "Question successfully created ", question: @question }, status: :ok
+      render json: { message: "Question successfully created ", question: @question }, status: :ok
     else
-      render json: { success: false, message: @question.errors.full_messages }, status: :unprocessable_entity
+      render json: { message: @question.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
@@ -26,30 +26,30 @@ class QuestionsController < ApplicationController
     @question = @quiz.questions.find_by(id: params[:id])
 
     if @question.update(update_question_params)
-      render json: { success: true, message: "Question successfully updated ", question: @question }, status: :ok
+      render json: { message: "Question successfully updated ", question: @question }, status: :ok
     else
-      render json: { success: false, message: @question.errors.full_messages }, status: :unprocessable_entity
+      render json: { message: @question.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
   def destroy
     @question = @quiz.questions.find_by(id: params[:id])
     @question.destroy
-    render json: { success: true, message: "Quiz deleted successfully" }, status: :ok
+    render json: { message: "Quiz deleted successfully" }, status: :ok
   end
 
   private
 
   def check_quiz_id
     @quiz = Quiz.find_by(id: params[:quiz_id])
-    render json: { success: false, message: "Quiz not found" }, status: 404 unless @quiz
+    render json: { message: "Quiz not found" }, status: 404 unless @quiz
   end
 
   def question_params
     params.required(:question).permit(:description, :user_id, options_attributes: [:name, :is_correct])
   end
 
-  def update_question_params 
+  def update_question_params
     params.required(:question).permit(:description, :user_id, options_attributes: [:name, :is_correct, :id, :_destroy])
   end
 end
