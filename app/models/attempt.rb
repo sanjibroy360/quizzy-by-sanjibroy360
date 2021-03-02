@@ -10,14 +10,14 @@ class Attempt < ApplicationRecord
   def correct_answers_count
     attempt_answers.count do |answer|
       @question = Question.find_by(id: answer.question_id)
-      answer.option_id == @question.correct_answer
+      answer.option_id == @question.correct_answer.id
     end
   end
 
   def incorrect_answers_count
     attempt_answers.count do |answer|
       @question = Question.find_by(id: answer.question_id)
-      answer.option_id != @question.correct_answer
+      answer.option_id != @question.correct_answer.id
     end
   end
 
