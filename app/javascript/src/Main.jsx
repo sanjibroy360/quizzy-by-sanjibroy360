@@ -18,17 +18,26 @@ function AuthRoutes() {
   return (
     <Switch>
       <Route exact path="/" component={QuizList} />
-      <Route exact path="/quiz/add" component={AddQuiz} />
-      <Route exact path="/quiz/:quizId/edit" component={EditQuiz} />
-      <Route exact path="/quiz/:quizId" component={ShowQuiz} />
-      <Route exact path="/quiz/:quizId/question/add" component={AddQuestion} />
+      <Route exact path="/dashboard" component={QuizList} />
+      <Route exact path="/dashboard/quizzes/add" component={AddQuiz} />
       <Route
         exact
-        path="/quiz/:quizId/question/:questionId/edit"
+        path="/dashboard/quizzes/:quizId/edit"
+        component={EditQuiz}
+      />
+      <Route exact path="/dashboard/quizzes/:quizId" component={ShowQuiz} />
+      <Route
+        exact
+        path="/dashboard/quizzes/:quizId/questions/add"
+        component={AddQuestion}
+      />
+      <Route
+        exact
+        path="/dashboard/quizzes/:quizId/questions/:questionId/edit"
         component={EditQuestion}
       />
-      <Route exact path="/reports" component={ShowReport} />
-      <Route exact path="/reports/download" component={DownloadReport} />
+      <Route exact path="/dashboard/reports" component={ShowReport} />
+      <Route exact path="/dashboard/reports/download" component={DownloadReport} />
       <Route component={PageNotFound} />
     </Switch>
   );

@@ -9,7 +9,7 @@ export default function SingleQuestion({ question, questionNumber }) {
   let { quizId } = useParams();
 
   function handleEdit(questionId, history, event) {
-    history.push(`/quiz/${quizId}/question/${questionId}/edit`);
+    history.push(`/dashboard/quizzes/${quizId}/questions/${questionId}/edit`);
   }
 
   async function handleDelete(questionId, history, event) {
@@ -21,7 +21,7 @@ export default function SingleQuestion({ question, questionNumber }) {
       if (isConfirm) {
         let response = await questionApi.deleteQuestion(quizId, questionId);
         Toastr.success(response.data.message);
-        window.location.href = `/quiz/${quizId}`;
+        window.location.href = `/dashboard/quizzes/${quizId}`;
       }
     } catch (error) {
       Toastr.error("Something went wrong");

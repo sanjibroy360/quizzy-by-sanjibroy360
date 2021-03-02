@@ -7,9 +7,6 @@ import Toastr from "components/Common/Toaster";
 import { saveAs } from "file-saver";
 
 export default function DownloadReport({ location }) {
- 
-  console.log(location);
-
   function handleDownload(event) {
     const data = URL.createObjectURL(new Blob([location.send.data]));
     saveAs(data, "report.xlsx");

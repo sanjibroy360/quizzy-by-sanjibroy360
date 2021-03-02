@@ -34,7 +34,7 @@ export default function AddQuestion() {
       let payload = generatePayload(question, options);
       let response = await questionApi.createQuestion(payload, quizId);
       if (response) {
-        window.location.href = `/quiz/${quizId}`;
+        window.location.href = `/dashboard/quizzes/${quizId}`;
         Toastr.success(response.data.message);
       }
     } catch (error) {
@@ -65,7 +65,7 @@ export default function AddQuestion() {
   return (
     <div className="w-11/12 mx-auto">
       <p className="text-xl font-medium text-gray-600">
-        <Link to={`/quiz/${quizId}`}>{quiz?.title}</Link>
+        <Link to={`/dashboard/quizzes/${quizId}`}>{quiz?.title}</Link>
       </p>
       <QuestionForm options={options} handleSubmit={handleSubmit} />
     </div>

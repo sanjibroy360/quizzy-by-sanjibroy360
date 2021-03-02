@@ -34,11 +34,18 @@ export default function EditQuestion() {
   }
 
   function generatePayload(question, options) {
-    prevOptions.forEach((prevOption, i) => {
-      if (!options[i]) {
-        options[i] = { ...prevOption, is_correct: false, _destroy: true };
+    for (let i = 0; i < prevOptions.length; i++) {
+      let found = false;
+      for (let j = 0; j < options.length; j++) {
+        if (prevOptions[i].id == options[j]?.id) {
+          found = true;
+          break;
+        }
       }
-    });
+      if (!found) {
+        options.push({ ...prevOptions[i], is_correct: false, _destroy: true });
+      }
+    }
 
     let payload = {
       question: {
@@ -61,11 +68,10 @@ export default function EditQuestion() {
         payload
       );
       if (response) {
-        window.location.href = `/quiz/${quizId}`;
+        window.location.href = `/dashboard/quizzes/${quizId}`;
         Toastr.success(response.data.message);
       }
     } catch (error) {
-      console.log(error);
       Toastr.error(error.response.data);
     }
   }
@@ -78,7 +84,7 @@ export default function EditQuestion() {
     <div>
       <div className="w-11/12 mx-auto">
         <p className="text-xl font-medium text-gray-600">
-          <Link to={`/quiz/${quizId}`}>{quiz?.title}</Link>
+          <Link to={`/dashboard/quizzes/${quizId}`}>{quiz?.title}</Link>
         </p>
         <QuestionForm
           prevQuestion={questionDescription}
