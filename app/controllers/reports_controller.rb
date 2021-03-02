@@ -3,10 +3,10 @@ class ReportsController < ApplicationController
 
   def index
     @reports = Attempt.generate_report
-    if @reports.count > 0
-      render json: { reports: @reports }, status: :ok
-    else
+    if @reports.blank?
       render json: { message: "No attempts found" }, status: :unprocessable_entity
+    else
+      render json: { reports: @reports }, status: :ok
     end
   end
 end

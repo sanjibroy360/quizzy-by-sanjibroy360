@@ -30,10 +30,10 @@ class AttemptsController < ApplicationController
     @attempt = Attempt.find_by(id: params[:id])
     if @attempt
       @attempt_answers = @attempt.attempt_answers
-      if @attempt_answers.count > 0
-        render json: { attempt_answers: @attempt_answers, correct_answer_count: @attempt.correct_answers_count, incorrect_answer_count: @attempt.incorrect_answers_count }, status: :ok
-      else
+      if @attempt_answers.blank?
         render json: { message: "You have not answered any question" }, status: :unprocessable_entity
+      else
+        render json: { attempt_answers: @attempt_answers, correct_answer_count: @attempt.correct_answers_count, incorrect_answer_count: @attempt.incorrect_answers_count }, status: :ok
       end
     else
       render json: { message: "No attempt record found." }, status: 404
