@@ -23,8 +23,6 @@ export default function ShowAnswers({ questions, attemptId }) {
       setSubmittedAnswers(response.data.attempt_answers);
       setCorrectAnswerCount(response.data.correct_answer_count);
       setIncorrectAnswerCount(response.data.incorrect_answer_count);
-
-      console.log(response);
     } catch (error) {
       Toastr.error(error.response.data);
     } finally {

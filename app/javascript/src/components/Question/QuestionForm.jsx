@@ -16,7 +16,7 @@ export default function QuestionForm({ options, prevQuestion, handleSubmit }) {
   }, []);
 
   function handleOptionValue(event, index) {
-    console.log(index, optionAttributes);
+    
 
     optionAttributes[index] = {
       ...optionAttributes[index],
@@ -24,7 +24,7 @@ export default function QuestionForm({ options, prevQuestion, handleSubmit }) {
     };
 
     setOptionAttributes([...optionAttributes]);
-    console.log(index, optionAttributes);
+    
   }
 
   function handleAddMoreOption() {

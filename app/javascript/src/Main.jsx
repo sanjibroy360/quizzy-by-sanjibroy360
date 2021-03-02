@@ -47,6 +47,5 @@ function NonAuthRoutes() {
 
 export default function Main() {
   let { state } = useUserContext();
-  // let [report, setReport] = useState(null)
   return <div>{state.user?.id ? <AuthRoutes /> : <NonAuthRoutes />}</div>;
 }

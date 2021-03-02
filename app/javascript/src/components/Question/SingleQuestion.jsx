@@ -3,6 +3,7 @@ import MarkCorrectAnswer from "./MarkCorrectAnswer";
 import ActionButton from "components/Form/ActionButton";
 import { useParams } from "react-router-dom";
 import questionApi from "apis/question";
+import Toastr from "components/Common/Toaster";
 
 export default function SingleQuestion({ question, questionNumber }) {
   let { quizId } = useParams();
@@ -11,14 +12,14 @@ export default function SingleQuestion({ question, questionNumber }) {
     history.push(`/quiz/${quizId}/question/${questionId}/edit`);
   }
 
-  function handleDelete(questionId, history, event) {
+  async function handleDelete(questionId, history, event) {
     try {
       let isConfirm = confirm(
         "Do you really want to delete the question?",
         false
       );
       if (isConfirm) {
-        let response = questionApi.deleteQuestion(quizId, questionId);
+        let response = await questionApi.deleteQuestion(quizId, questionId);
         Toastr.success(response.data.message);
         window.location.href = `/quiz/${quizId}`;
       }
