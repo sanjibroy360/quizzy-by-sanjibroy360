@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import questionApi from "apis/question";
 import SingleQuestion from "./SingleQuestion";
+import Toastr from "components/Common/Toaster";
 
 export default function QuestionList() {
   let [questions, setQuestions] = useState([]);
@@ -17,7 +18,7 @@ export default function QuestionList() {
         setQuestions(response.data);
       }
     } catch (error) {
-      Toaster.error(error.response.data);
+      Toastr.error(error.response.data);
     }
   }
   return (

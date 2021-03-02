@@ -22,14 +22,13 @@ export default function UserLogin({ setAttempt, quizTitle, quizId }) {
           last_name: lastName,
           email: email,
         },
-        quiz_id: quizId
+        quiz_id: quizId,
       };
       let response = await publicApi.attemptQuiz(payload, slug);
       if (response) {
         setAttempt(response.data.attempt);
       }
     } catch (error) {
-      console.log(error.response);
       Toastr.error(error.response.data);
     } finally {
       resetForm();

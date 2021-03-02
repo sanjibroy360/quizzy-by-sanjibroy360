@@ -4,7 +4,7 @@ import UserLogin from "./UserLogin";
 import publicApi from "apis/public";
 import Questions from "./Questions";
 import Loader from "components/Common/Loader";
-import ShowAnswers from "./ShowAnswers";
+import Toastr from "components/Common/Toaster";
 
 export default function NewAttempt() {
   let { slug } = useParams();
