@@ -24,7 +24,7 @@ export default function AddQuiz() {
 
       let response = await quizApi.addQuiz(payload);
       if (response) {
-        history.push("/");
+        history.push("/dashboard");
         Toastr.success(response.data.message);
       }
     } catch (error) {

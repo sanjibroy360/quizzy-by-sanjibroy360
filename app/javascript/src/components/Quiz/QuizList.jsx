@@ -36,7 +36,7 @@ export default function QuizList() {
   }
 
   function handleClick() {
-    history.push("/quiz/add");
+    history.push("/dashboard/quizzes/add");
   }
 
   if (loading) {

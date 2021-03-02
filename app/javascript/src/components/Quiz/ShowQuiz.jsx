@@ -21,7 +21,7 @@ export default function ShowQuiz() {
   }, []);
 
   function handleClick(event) {
-    history.push(`/quiz/${quizId}/question/add`);
+    history.push(`/dashboard/quizzes/${quizId}/questions/add`);
   }
 
   async function handlePublish(event) {

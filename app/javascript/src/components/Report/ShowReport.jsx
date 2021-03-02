@@ -47,7 +47,7 @@ export default function ShowReport() {
       if (response) {
         setLoading(false);
         history.push({
-          pathname: "/reports/download",
+          pathname: "/dashboard/reports/download",
           send: { data: response.data },
         });
       }

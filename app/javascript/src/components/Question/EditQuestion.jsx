@@ -61,11 +61,10 @@ export default function EditQuestion() {
         payload
       );
       if (response) {
-        window.location.href = `/quiz/${quizId}`;
+        window.location.href = `/dashboard/quizzes/${quizId}`;
         Toastr.success(response.data.message);
       }
     } catch (error) {
-      console.log(error);
       Toastr.error(error.response.data);
     }
   }
@@ -78,7 +77,7 @@ export default function EditQuestion() {
     <div>
       <div className="w-11/12 mx-auto">
         <p className="text-xl font-medium text-gray-600">
-          <Link to={`/quiz/${quizId}`}>{quiz?.title}</Link>
+          <Link to={`/dashboard/quizzes/${quizId}`}>{quiz?.title}</Link>
         </p>
         <QuestionForm
           prevQuestion={questionDescription}

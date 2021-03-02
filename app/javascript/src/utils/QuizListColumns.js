@@ -5,7 +5,7 @@ import Toastr from "components/Common/Toaster";
 import { Link } from "react-router-dom";
 
 function handleEdit(quizId, history, event) {
-  history.push(`/quiz/${quizId}/edit`);
+  history.push(`/dashboard/quizzes/${quizId}/edit`);
 }
 
 async function handleDelete(quizId, history, event) {
@@ -15,7 +15,7 @@ async function handleDelete(quizId, history, event) {
       let response = await quizApi.deleteQuiz(quizId);
       if (response) {
         Toastr.success(response.data.message);
-        window.location.href = "/";
+        window.location.href = "/dashboard";
       }
     }
   } catch (error) {
@@ -30,7 +30,7 @@ export const COLUMNS = [
     Cell: ({ row }) => {
       return (
         <h2>
-          <Link to={`/quiz/${row.original.id}`}>{row.original.title}</Link>
+          <Link to={`/dashboard/quizzes/${row.original.id}`}>{row.original.title}</Link>
         </h2>
       );
     },

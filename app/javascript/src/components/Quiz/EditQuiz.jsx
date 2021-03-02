@@ -40,7 +40,7 @@ export default function EditQuiz() {
       };
       let response = await quizApi.updateQuiz(payload, quizId);
       if (response) {
-        history.push("/");
+        history.push("/dashboard");
         Toastr.success(response.data.message);
       }
     } catch (error) {
