@@ -10,7 +10,7 @@ export default function NonAuthNavbar() {
           class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0"
         >
           <img src="https://img.icons8.com/dotty/60/000000/education.png" />
-          <span class="ml-3 text-xl font-semibold">Quizzy</span>
+          <span class="ml-3 text-xl">Quizzy</span>
         </Link>
         <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
           <Link to="/login" class="mr-5 hover:text-gray-900">

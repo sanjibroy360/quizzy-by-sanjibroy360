@@ -1,5 +1,4 @@
 import React from "react";
-import Input from "components/Form/Input";
 
 export default function OptionInputWithRemoveButton({
   name,
@@ -8,7 +7,7 @@ export default function OptionInputWithRemoveButton({
   type,
   keyName,
   value,
-  optionNo,
+  extraInfo,
   handleRemoveOption,
 }) {
   return (
@@ -20,14 +19,14 @@ export default function OptionInputWithRemoveButton({
         <input
           type={type}
           name={name}
-          onChange={(event) => handleChange(event.target.value)}
+          onChange={(event) => handleChange(event, extraInfo)}
           key={keyName}
           className="border border-gray-500 py-1 px-3 text-sm text-grey-500 rounded"
           value={value}
         />
         <button
           className="py-1 px-3 bg-red-700 rounded ml-2"
-          onClick={(event) => handleRemoveOption(optionNo, event)}
+          onClick={(event) => handleRemoveOption(event, extraInfo)}
         >
           <i className="ri-indeterminate-circle-fill text-white text-lg align-middle" />
         </button>
