@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user, only: [:create]
-  before_action :check_quiz_id, only: [:create, :index, :edit, :update, :destroy]
+  before_action :load_quiz, only: [:create, :index, :edit, :update, :destroy]
 
   def index
     @questions = @quiz.questions
@@ -25,7 +25,7 @@ class QuestionsController < ApplicationController
   def update
     @question = @quiz.questions.find_by(id: params[:id])
 
-    if @question.update(update_question_params)
+    if @question.update(question_params)
       render json: { message: "Question successfully updated ", question: @question }, status: :ok
     else
       render json: { message: @question.errors.full_messages }, status: :unprocessable_entity
@@ -40,16 +40,12 @@ class QuestionsController < ApplicationController
 
   private
 
-  def check_quiz_id
+  def load_quiz
     @quiz = Quiz.find_by(id: params[:quiz_id])
     render json: { message: "Quiz not found" }, status: 404 unless @quiz
   end
 
   def question_params
-    params.required(:question).permit(:description, :user_id, options_attributes: [:name, :is_correct])
-  end
-
-  def update_question_params
     params.required(:question).permit(:description, :user_id, options_attributes: [:name, :is_correct, :id, :_destroy])
   end
 end

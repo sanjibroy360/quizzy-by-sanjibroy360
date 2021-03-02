@@ -1,6 +1,6 @@
 class QuizzesController < ApplicationController
   before_action :authenticate_user, only: [:create, :index, :update, :destroy]
-  before_action :get_quiz, only: [:show, :edit, :update, :destroy, :publish]
+  before_action :load_quiz, only: [:show, :edit, :update, :destroy, :publish]
   before_action :ensure_quiz_not_published, only: [:publish]
 
   def index
@@ -59,7 +59,7 @@ class QuizzesController < ApplicationController
 
   private
 
-  def get_quiz
+  def load_quiz
     @quiz = Quiz.find_by(id: params[:id])
   end
 
