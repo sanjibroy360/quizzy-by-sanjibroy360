@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import UserLogin from "./UserLogin";
 import publicApi from "apis/public";
 import Questions from "./Questions";
@@ -8,6 +8,7 @@ import Toastr from "components/Common/Toaster";
 
 export default function NewAttempt() {
   let { slug } = useParams();
+  let history = useHistory();
   let [attempt, setAttempt] = useState(null);
   let [quiz, setQuiz] = useState(null);
   let [loading, setLoading] = useState(false);
@@ -22,6 +23,7 @@ export default function NewAttempt() {
       let response = await publicApi.getQuizDetails(slug);
       setQuiz(response.data.quiz);
     } catch (error) {
+      history.push("/");
       Toastr.error(error.response.data);
     } finally {
       setLoading(false);

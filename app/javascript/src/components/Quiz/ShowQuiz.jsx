@@ -59,7 +59,7 @@ export default function ShowQuiz() {
     <div>
       <div className="flex justify-between items-center w-11/12 mx-auto">
         <div className="flex text-xl font-medium text-gray-600">
-          <Link to={`/quiz/${quiz?.id}`}>{quiz?.title}</Link>
+          <Link to={`/dashboard/quizzes/${quiz?.id}`}>{quiz?.title}</Link>
           {slug && (
             <Link to="#" className="text-sm ml-4 text-blue-500 hover:underline">
               {origin + "/" + slug}
