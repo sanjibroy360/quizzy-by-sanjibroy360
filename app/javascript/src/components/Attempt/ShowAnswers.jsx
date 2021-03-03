@@ -34,18 +34,39 @@ export default function ShowAnswers({ questions, attemptId }) {
     return correctAnswerCount + incorrectAnswerCount > 1 ? "answers" : "answer";
   }
 
+  function formatAnswerString() {
+    let str = [];
+    if (correctAnswerCount > 0) {
+      str.push(`${correctAnswerCount} correct`);
+    }
+
+    if (incorrectAnswerCount > 0) {
+      str.push(`${incorrectAnswerCount} incorrect`);
+    }
+
+    let answerString = `You have submitted ${str.join(
+      " and "
+    )} ${pluralize_answers()}.`;
+    return answerString;
+  }
+
   if (loading) {
     return <Loader />;
   }
 
   return (
     <>
-      <p className="w-11/12 mx-auto text-sm text-gray-600">
-        Thank you for taking the quiz, here are your results.
-        <br />
-        You have submitted {correctAnswerCount} correct and{" "}
-        {incorrectAnswerCount} incorrect {pluralize_answers()}.
-      </p>
+      {correctAnswerCount + incorrectAnswerCount == 0 ? (
+        <p className="w-11/12 mx-auto text-sm text-gray-600">
+          You have not answered any question.
+        </p>
+      ) : (
+        <p className="w-11/12 mx-auto text-sm text-gray-600">
+          Thank you for taking the quiz, here are your results.
+          <br />
+          {formatAnswerString()}
+        </p>
+      )}
       {questions?.map((question, i) => {
         let index = submittedAnswers.findIndex(
           (answer) => answer.question_id === question.id
