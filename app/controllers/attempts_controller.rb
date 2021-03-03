@@ -1,19 +1,37 @@
 class AttemptsController < ApplicationController
-  before_action :check_for_previous_unsubmitted_attempt, only: [:create]
-  before_action :get_attempt, only: [:update]
+  before_action :load_user, only: [:create]
+  before_action :load_quiz, only: [:create]
+  before_action :load_attempt, only: [:update]
 
   def create
     if @user.nil?
       @user = User.new(user_params)
-      render json: { message: @user.errors.full_messages }, status: :unprocessable_entity unless @user.save
-    end
-
-    @attempt = @quiz.attempts.build(user_id: @user.id) if @attempt.nil?
-
-    if @attempt.save
-      render json: { attempt: @attempt }, status: :ok
+      if @quiz
+        @user.save
+        @attempt = @user.attempts.build(quiz_id: @quiz.id)
+        if (@attempt.save)
+          render json: { attempt: @attempt }, status: :ok
+        else
+          render json: { message: @attempt.errors.full_messages }, status: :unprocessable_entity
+        end
+      else
+        render json: { message: "Quiz not found" }, status: 404
+      end
     else
-      render json: { message: @user.errors.full_messages }, status: :unprocessable_entity
+      find_or_create_attempt
+    end
+  end
+
+  def find_or_create_attempt
+    if (@quiz)
+      @attempt = @user.attempts.find_or_create_by(quiz_id: @quiz.id)
+      if (@attempt.is_submitted?)
+        render json: { message: "You have already submitted this quiz" }, status: :unprocessable_entity
+      else
+        render json: { attempt: @attempt }, status: :ok
+      end
+    else
+      render json: { message: "Quiz not found" }, status: 404
     end
   end
 
@@ -42,6 +60,14 @@ class AttemptsController < ApplicationController
 
   private
 
+  def load_user
+    @user = User.find_by(email: params[:user][:email])
+  end
+
+  def load_quiz
+    @quiz = Quiz.find_by(id: params[:quiz_id])
+  end
+
   def check_for_previous_unsubmitted_attempt
     @user = User.find_by(email: params[:user][:email])
     @quiz = Quiz.find_by(id: params[:quiz_id])
@@ -57,7 +83,7 @@ class AttemptsController < ApplicationController
     end
   end
 
-  def get_attempt
+  def load_attempt
     @attempt = Attempt.find_by(quiz_id: params[:quiz_id], user_id: params[:user_id])
     render json: { message: "You have not attempted the quiz." }, status: 404 unless @attempt
   end
